@@ -1,52 +1,37 @@
-
+import PropTypes from 'prop-types';
 
 import { GifItem } from './GifItem';
-import {usefetchGifs} from '../hooks/usefetchGifs'
-//creacion nuevo componente
-//llama la categoria dividiendolas por titulo y enumerandolos en listas del 1 al 10
+import { usefetchGifs } from '../hooks/usefetchGifs';
 
+export const GifGrid = ({ category }) => {
 
-export const GifGrid = ({category}) => {
-
-  const {images, isLoading}= usefetchGifs( category);
-
-
-
-
-
- 
- 
-  return (
-    <>
-    <h3>{ category }</h3>
-      {
-        isLoading && (<h2>Cargando...</h2>)
-        
-
-
-      }
+    const { images, isLoading } = usefetchGifs( category );
     
-      <div className='card-grid'>
-        {
-            images.map( (image) => (
+    return (
+        <>
+            <h3>{ category }</h3>
+            {
+                isLoading && ( <h2>Cargando...</h2> )
+            }
+            
 
-              <GifItem
-               key={image.id}
-               {...image}
-              
-               
-               />
-            )
-            )
+            <div className="card-grid">
+                {
+                    images.map( ( image ) => (
+                        <GifItem 
+                            key={ image.id } 
+                            { ...image }
+                        />
+                    ))
+                }
+                
+            </div>
+
+        </>
+    )
+}
 
 
-        }
-
-      <li></li>
-    
-
-      </div>
-  
-    </>
-  )
+GifGrid.propTypes = {
+    category: PropTypes.string.isRequired,
 }

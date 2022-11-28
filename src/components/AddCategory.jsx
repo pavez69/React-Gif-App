@@ -1,39 +1,37 @@
-import { useState } from "react"
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-//componente funcional
 export const AddCategory = ({ onNewCategory }) => {
 
-//hook de estado de los elementos que se actualizaran constantemente
-     const [inputValue, setInputValue] = useState('')
+    const [ inputValue, setInputValue ] = useState('');
+
+    const onInputChange = ({ target }) => {
+        setInputValue( target.value );
+    }
+
+    const onSubmit = ( event ) => {
+        event.preventDefault();
+        if( inputValue.trim().length <= 1) return;
+
+        // setCategories( categories => [ inputValue, ...categories ]);
+        setInputValue('');
+        onNewCategory( inputValue.trim() );
+    }
+
+    return (
+        <form onSubmit={ onSubmit } aria-label="form">
+            <input 
+                type="text"
+                placeholder="Buscar gifs"
+                value={ inputValue }
+                onChange={ onInputChange }
+            />
+        </form>
+    )
+}
 
 
-     const onInputChange = ({target}) =>{
-        
-        setInputValue(target.value) 
 
-     }
-//evento que va al inicio del formulario
-     const onSubmit = (event)=>{
-
-            event.preventDefault();
-            if( inputValue.trim().length <= 1)
-            return;
-
-
-            onNewCategory(inputValue.trim());
-            //setCategories( categories => [ inputValue, ...categories] )
-            setInputValue('');
-     }
-
-  //formulario que aparecera en la aplicasao
-  return (
-   <form onSubmit={ onSubmit }>
-       <input 
-           type="text"
-           placeholder="escribe..."
-           value={ inputValue }
-           onChange={ onInputChange }
-       />
-   </form>
-)
+AddCategory.propTypes = {
+    onNewCategory: PropTypes.func.isRequired,
 }
